@@ -11,6 +11,7 @@ import UIKit
 class AddToDoViewController: UIViewController {
 
     @IBOutlet weak var textField: UITextField!
+    var ToDoArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +20,21 @@ class AddToDoViewController: UIViewController {
     
     
     @IBAction func AddToDo(_ sender: UIButton) {
-        //テキストフィールド内に記入した情報をアプリ内に保存する。
+        
+        //現在の配列の状況を取り出す。
+        if UserDefaults.standard.object(forKey:"ToDoArray") != nil{
+            self.ToDoArray = UserDefaults.standard.object(forKey:"ToDoArray") as! [String]
+        }
+        
+        //テキストフィールド内に記入した情報配列に代入。
+        self.ToDoArray.append(textField.text!)
+        
+        //登録した内容をUserDefaults(アプリ内)に保存。
+        UserDefaults.standard.set(self.ToDoArray, forKey: "ToDoArray")
+        
+        
         //登録したら、前の画面に戻る。
+        self.navigationController?.popViewController(animated: true)
     }
     
     
